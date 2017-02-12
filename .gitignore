@@ -1,0 +1,5 @@
+/.idea/
+/typings/
+/node_modules/
+/err.log
+/out.log
