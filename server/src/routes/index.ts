@@ -12,7 +12,7 @@ module Route {
         constructor(app) {
             this.router = express.Router();
 
-            let clientPath = path.resolve(__dirname, '../../public');
+            let clientPath = path.resolve(__dirname, '../../../client');
             console.log(clientPath);
 
             app.use(express.static(clientPath));

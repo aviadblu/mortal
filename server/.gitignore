@@ -1,4 +1,4 @@
-/.idea/
+.idea
 /typings/
 /node_modules/
 /err.log

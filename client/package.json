@@ -1,0 +1,21 @@
+{
+  "name": "mortal-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@types/d3": "^4.5.0",
+    "@types/react": "^15.0.9",
+    "@types/react-dom": "^0.14.23",
+    "d3": "^4.5.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.0.4-rc.2",
+    "source-map-loader": "^0.1.6",
+    "typescript": "^2.1.6"
+  },
+  "scripts": {
+    "watch": "webpack --watch"
+  }
+}
