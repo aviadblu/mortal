@@ -5,36 +5,23 @@ import * as cheerio from "cheerio";
 import {RequestService} from "../../services/request.service";
 let requestSvc = new RequestService();
 
-export class ServersAPI {
-    private svnPath: string = '/Users/shimonmo/svn/';
+const pollXmlListInterval = 1000 * 60 * 10; // 10 minutes
+//const pollXmlListInterval = 1000 * 10; // 10 seconds
 
-    serversList: Array<any> = [
-        {
-            name: 'mock server1'
-        },
-        {
-            name: 'mock server2'
-        }
-    ];
+export class ServersAPI {
+    private _projectsMetadata: Object = {};
 
     constructor() {
-        console.log('hello from ServersAPI class');
+        this.loadData();
+
+        setInterval(this.loadData.bind(this), pollXmlListInterval);
     }
 
-    getXMLList() {
-        const serverListUrl = "https://csvn1-pro.il.hpecorp.net:19181/svn/tsg-bto-apps-lt-ops/trunk/app/BuildManager/ALMToolsGlobal/Reports/Config";
-        return requestSvc.get(serverListUrl)
-            .then((response) => {
-                const $ = cheerio.load(response);
-                let linksArr = $('a');
-                let links = [];
-                linksArr.each((index, link) => {
-                    if (link && link.attribs && link.attribs.href && link.attribs.href.indexOf('.xml') > -1) {
-                        links.push(`${serverListUrl}/${link.attribs.href}`);
-                    }
-                });
-
-                return links;
+    loadData() {
+        let self = this;
+        return this.getXMLList()
+            .then(() => {
+                return self.getHostsList();
             });
     }
 
@@ -46,8 +33,82 @@ export class ServersAPI {
         return text;
     }
 
-    getHostsListFromXML(xml_url) {
-        return requestSvc.get(xml_url)
+    static extractLinkHref(htmlLinkElement) {
+        let href = '';
+        if (htmlLinkElement && htmlLinkElement.attribs && htmlLinkElement.attribs.href) {
+            href = htmlLinkElement.attribs.href;
+        }
+        return href.indexOf('..') < 0 || href.indexOf('.') < 0 ? href : null;
+    }
+
+    private getXMLListInDirectory(group, dirUrl) {
+        let self = this;
+        return requestSvc.get(dirUrl)
+            .then((response) => {
+                const $ = cheerio.load(response);
+                let linksArr = $('a');
+                let href;
+                self._projectsMetadata[group] = [];
+                linksArr.each((index, link) => {
+                    href = ServersAPI.extractLinkHref(link);
+                    if (href && href.indexOf('.xml') > -1) {
+                        self._projectsMetadata[group].push({
+                            url: dirUrl + href,
+                            environmentName: '',
+                            hosts: []
+                        });
+                    }
+                });
+                return true;
+            });
+    }
+
+    private getXMLList() {
+        let self = this;
+        const serverListUrl = "https://csvn1-pro.il.hpecorp.net:19181/svn/tsg-bto-apps-lt-ops/trunk/app/BuildManager/ALMToolsGlobal/Reports/Deployment";
+        return requestSvc.get(serverListUrl)
+            .then((response) => {
+                self._projectsMetadata = {};
+                let dirListPromises = [];
+
+                const $ = cheerio.load(response);
+                let dirsArr = $('a');
+
+                dirsArr.each((index, dir) => {
+                    let href = ServersAPI.extractLinkHref(dir);
+                    if (href) {
+                        let dirUrl = `${serverListUrl}/${ServersAPI.extractLinkHref(dir)}`;
+                        dirListPromises.push(self.getXMLListInDirectory(href.replace('/', ''), dirUrl));
+                    }
+                });
+
+                return Promise.all(dirListPromises)
+                    .then(() => {
+                        return self._projectsMetadata;
+                    });
+            });
+    }
+
+    private getHostsList() {
+        let self = this;
+        let hostsPromises = [];
+        Object.keys(this._projectsMetadata).forEach((groupKey) => {
+            let jobIndex = 0;
+            self._projectsMetadata[groupKey].forEach((job) => {
+                hostsPromises.push(self.extractHostsListFromXML(job.url)
+                    .then((hostData) => {
+                        job.hosts = hostData['hosts'];
+                        job.environmentName = hostData['environmentName'];
+                    }));
+
+                jobIndex++;
+            });
+        });
+
+    }
+
+    private extractHostsListFromXML(xmlUrl) {
+        return requestSvc.get(xmlUrl)
             .then((response) => {
                 const $ = cheerio.load(response, {
                     normalizeWhitespace: true,
@@ -73,14 +134,15 @@ export class ServersAPI {
 
                 });
 
-
                 return {
-                    'environment-name': environmentName,
+                    environmentName: environmentName,
                     hosts: hosts
                 };
             });
-
     }
 
+    get projectsMetadata(): Object {
+        return this._projectsMetadata;
+    }
 }
 

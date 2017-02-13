@@ -1,9 +1,13 @@
 /// <reference path="../../../src/_all.d.ts" />
 export declare class ServersAPI {
-    private svnPath;
-    serversList: Array<any>;
+    private _projectsMetadata;
     constructor();
-    getXMLList(): Promise<{}>;
+    loadData(): Promise<void>;
     static extractText(htmlElement: any): string;
-    getHostsListFromXML(xml_url: any): Promise<{}>;
+    static extractLinkHref(htmlLinkElement: any): string;
+    private getXMLListInDirectory(group, dirUrl);
+    private getXMLList();
+    private getHostsList();
+    private extractHostsListFromXML(xmlUrl);
+    readonly projectsMetadata: Object;
 }
