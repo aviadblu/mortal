@@ -39,192 +39,16 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
-
-	module.exports = React;
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(0);
-	var axios_1 = __webpack_require__(14);
-	var ProjectTabs = (function (_super) {
-	    __extends(ProjectTabs, _super);
-	    function ProjectTabs() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    ProjectTabs.prototype.render = function () {
-	        var projectsTabs = [];
-	        this.props.projects.forEach(function (project) {
-	            projectsTabs.push(React.createElement("div", { key: project, className: "tabs__item" }, project));
-	        });
-	        return React.createElement("div", { className: "tabs tabs--bottom-line border--b" }, projectsTabs);
-	    };
-	    return ProjectTabs;
-	}(React.Component));
-	exports.ProjectTabs = ProjectTabs;
-	var ProjectsList = (function (_super) {
-	    __extends(ProjectsList, _super);
-	    function ProjectsList(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.state = {
-	            projects: {}
-	        };
-	        return _this;
-	    }
-	    ProjectsList.prototype.componentDidMount = function () {
-	        var _this = this;
-	        axios_1.default.get('/api/servers/projects-metadata')
-	            .then(function (res) {
-	            _this.setState({ projects: res.data });
-	        });
-	    };
-	    ProjectsList.prototype.render = function () {
-	        var projectsTabsList = [];
-	        Object.keys(this.state.projects).forEach(function (project) {
-	            projectsTabsList.push(project);
-	        });
-	        return React.createElement("div", { className: "tabs tabs--bottom-line border--b" },
-	            React.createElement(ProjectTabs, { projects: projectsTabsList }));
-	    };
-	    return ProjectsList;
-	}(React.Component));
-	exports.ProjectsList = ProjectsList;
-
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(0);
-	var ServersGraph = (function (_super) {
-	    __extends(ServersGraph, _super);
-	    function ServersGraph() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    ServersGraph.prototype.render = function () {
-	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-b--lg" },
-	            React.createElement("div", { className: "minor padding--md bg--primary" }, this.props.title),
-	            React.createElement("div", { className: "padding--xl" },
-	                React.createElement("svg", { width: "960", height: "500" })));
-	    };
-	    return ServersGraph;
-	}(React.Component));
-	exports.ServersGraph = ServersGraph;
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(0);
-	var ServersList = (function (_super) {
-	    __extends(ServersList, _super);
-	    function ServersList() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    ServersList.prototype.render = function () {
-	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-b--lg" },
-	            React.createElement("div", { className: "minor padding--md bg--primary" }, this.props.title),
-	            React.createElement("div", { className: "padding--xl" },
-	                React.createElement("table", { className: "table table--tertiary" },
-	                    React.createElement("thead", null,
-	                        React.createElement("tr", null,
-	                            React.createElement("th", null, "#"),
-	                            React.createElement("th", null, "Name"),
-	                            React.createElement("th", null, "Host"),
-	                            React.createElement("th", null, "Data"))),
-	                    React.createElement("tbody", null,
-	                        React.createElement("tr", null,
-	                            React.createElement("td", null, "1"),
-	                            React.createElement("td", null, "Mark"),
-	                            React.createElement("td", null, "Otto"),
-	                            React.createElement("td", null, "@mdo")),
-	                        React.createElement("tr", null,
-	                            React.createElement("td", null, "2"),
-	                            React.createElement("td", null, "Jacob"),
-	                            React.createElement("td", null, "Thornton"),
-	                            React.createElement("td", null, "@fat")),
-	                        React.createElement("tr", null,
-	                            React.createElement("td", null, "3"),
-	                            React.createElement("td", null, "Larry"),
-	                            React.createElement("td", null, "the Bird"),
-	                            React.createElement("td", null, "@twitter"))))));
-	    };
-	    return ServersList;
-	}(React.Component));
-	exports.ServersList = ServersList;
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	module.exports = ReactDOM;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(0);
-	var ReactDOM = __webpack_require__(4);
-	var ProjectsList_1 = __webpack_require__(1);
-	var ServersList_1 = __webpack_require__(3);
-	var ServersGraph_1 = __webpack_require__(2);
-	var Layout = (function (_super) {
-	    __extends(Layout, _super);
-	    function Layout() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    Layout.prototype.render = function () {
-	        return React.createElement("div", null,
-	            React.createElement(ProjectsList_1.ProjectsList, null),
-	            React.createElement(ServersList_1.ServersList, { title: "Servers List" }),
-	            React.createElement(ServersGraph_1.ServersGraph, { title: "graph" }));
-	    };
-	    ;
-	    return Layout;
-	}(React.Component));
-	ReactDOM.render(React.createElement(Layout, null), document.getElementById("root"));
-
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var bind = __webpack_require__(13);
+	var bind = __webpack_require__(8);
 	
 	/*global toString:true*/
 	
@@ -524,12 +348,18 @@
 
 
 /***/ },
-/* 7 */
+/* 1 */
+/***/ function(module, exports) {
+
+	module.exports = React;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	var normalizeHeaderName = __webpack_require__(29);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
@@ -547,10 +377,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(9);
+	    adapter = __webpack_require__(4);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(9);
+	    adapter = __webpack_require__(4);
 	  }
 	  return adapter;
 	}
@@ -621,10 +451,10 @@
 	
 	module.exports = defaults;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 8 */
+/* 3 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -810,17 +640,17 @@
 
 
 /***/ },
-/* 9 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	var settle = __webpack_require__(21);
 	var buildURL = __webpack_require__(24);
 	var parseHeaders = __webpack_require__(30);
 	var isURLSameOrigin = __webpack_require__(28);
-	var createError = __webpack_require__(12);
+	var createError = __webpack_require__(7);
 	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 	
 	module.exports = function xhrAdapter(config) {
@@ -991,10 +821,10 @@
 	  });
 	};
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 10 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1019,7 +849,7 @@
 
 
 /***/ },
-/* 11 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1030,7 +860,7 @@
 
 
 /***/ },
-/* 12 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1053,7 +883,7 @@
 
 
 /***/ },
-/* 13 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1070,6 +900,196 @@
 
 
 /***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var axios_1 = __webpack_require__(14);
+	var ProjectTabs = (function (_super) {
+	    __extends(ProjectTabs, _super);
+	    function ProjectTabs(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.state = {
+	            selected: _this.props.selected
+	        };
+	        return _this;
+	    }
+	    ProjectTabs.prototype.handleTabClick = function (index) {
+	        this.setState({ selected: index });
+	        this.props.onTabSelection(index);
+	    };
+	    ProjectTabs.prototype.render = function () {
+	        var _this = this;
+	        var projectsTabs = [];
+	        var selectedClass;
+	        var index = 0;
+	        this.props.projects.forEach(function (project) {
+	            selectedClass = 'tabs__item';
+	            if (index == _this.state.selected) {
+	                selectedClass = 'tabs__item active';
+	            }
+	            projectsTabs.push(React.createElement("div", { key: project, className: selectedClass, onClick: _this.handleTabClick.bind(_this, index) }, project));
+	            index++;
+	        });
+	        return React.createElement("div", { className: "tabs tabs--bottom-line border--b" }, projectsTabs);
+	    };
+	    return ProjectTabs;
+	}(React.Component));
+	exports.ProjectTabs = ProjectTabs;
+	var ProjectsList = (function (_super) {
+	    __extends(ProjectsList, _super);
+	    function ProjectsList(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.state = {
+	            selected: 0,
+	            projects: {}
+	        };
+	        return _this;
+	    }
+	    ProjectsList.prototype.handleTabSelection = function (index) {
+	        this.setState({ selected: index });
+	    };
+	    ProjectsList.prototype.componentDidMount = function () {
+	        var _this = this;
+	        axios_1.default.get('/api/servers/projects-metadata')
+	            .then(function (res) {
+	            _this.setState({ projects: res.data });
+	        });
+	    };
+	    ProjectsList.prototype.render = function () {
+	        var projectsTabsList = [];
+	        Object.keys(this.state.projects).forEach(function (project) {
+	            projectsTabsList.push(project);
+	        });
+	        return React.createElement("div", { className: "tabs tabs--bottom-line border--b" },
+	            React.createElement(ProjectTabs, { projects: projectsTabsList, selected: this.state.selected, onTabSelection: this.handleTabSelection.bind(this) }));
+	    };
+	    return ProjectsList;
+	}(React.Component));
+	exports.ProjectsList = ProjectsList;
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ServersGraph = (function (_super) {
+	    __extends(ServersGraph, _super);
+	    function ServersGraph() {
+	        return _super !== null && _super.apply(this, arguments) || this;
+	    }
+	    ServersGraph.prototype.render = function () {
+	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-b--lg" },
+	            React.createElement("div", { className: "minor padding--md bg--primary" }, this.props.title),
+	            React.createElement("div", { className: "padding--xl" },
+	                React.createElement("svg", { width: "960", height: "500" })));
+	    };
+	    return ServersGraph;
+	}(React.Component));
+	exports.ServersGraph = ServersGraph;
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ServersList = (function (_super) {
+	    __extends(ServersList, _super);
+	    function ServersList() {
+	        return _super !== null && _super.apply(this, arguments) || this;
+	    }
+	    ServersList.prototype.render = function () {
+	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-b--lg" },
+	            React.createElement("div", { className: "minor padding--md bg--primary" }, this.props.title),
+	            React.createElement("div", { className: "padding--xl" },
+	                React.createElement("table", { className: "table table--tertiary" },
+	                    React.createElement("thead", null,
+	                        React.createElement("tr", null,
+	                            React.createElement("th", null, "#"),
+	                            React.createElement("th", null, "Name"),
+	                            React.createElement("th", null, "Host"),
+	                            React.createElement("th", null, "Data"))),
+	                    React.createElement("tbody", null,
+	                        React.createElement("tr", null,
+	                            React.createElement("td", null, "1"),
+	                            React.createElement("td", null, "Mark"),
+	                            React.createElement("td", null, "Otto"),
+	                            React.createElement("td", null, "@mdo")),
+	                        React.createElement("tr", null,
+	                            React.createElement("td", null, "2"),
+	                            React.createElement("td", null, "Jacob"),
+	                            React.createElement("td", null, "Thornton"),
+	                            React.createElement("td", null, "@fat")),
+	                        React.createElement("tr", null,
+	                            React.createElement("td", null, "3"),
+	                            React.createElement("td", null, "Larry"),
+	                            React.createElement("td", null, "the Bird"),
+	                            React.createElement("td", null, "@twitter"))))));
+	    };
+	    return ServersList;
+	}(React.Component));
+	exports.ServersList = ServersList;
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = ReactDOM;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(12);
+	var ProjectsList_1 = __webpack_require__(9);
+	var ServersList_1 = __webpack_require__(11);
+	var ServersGraph_1 = __webpack_require__(10);
+	var Layout = (function (_super) {
+	    __extends(Layout, _super);
+	    function Layout() {
+	        return _super !== null && _super.apply(this, arguments) || this;
+	    }
+	    Layout.prototype.render = function () {
+	        return React.createElement("div", null,
+	            React.createElement(ProjectsList_1.ProjectsList, null),
+	            React.createElement(ServersList_1.ServersList, { title: "Servers List" }),
+	            React.createElement(ServersGraph_1.ServersGraph, { title: "graph" }));
+	    };
+	    ;
+	    return Layout;
+	}(React.Component));
+	ReactDOM.render(React.createElement(Layout, null), document.getElementById("root"));
+
+
+/***/ },
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1081,10 +1101,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
-	var bind = __webpack_require__(13);
+	var utils = __webpack_require__(0);
+	var bind = __webpack_require__(8);
 	var Axios = __webpack_require__(17);
-	var defaults = __webpack_require__(7);
+	var defaults = __webpack_require__(2);
 	
 	/**
 	 * Create an instance of Axios
@@ -1117,9 +1137,9 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(10);
+	axios.Cancel = __webpack_require__(5);
 	axios.CancelToken = __webpack_require__(16);
-	axios.isCancel = __webpack_require__(11);
+	axios.isCancel = __webpack_require__(6);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
@@ -1139,7 +1159,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(10);
+	var Cancel = __webpack_require__(5);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1202,8 +1222,8 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(7);
-	var utils = __webpack_require__(6);
+	var defaults = __webpack_require__(2);
+	var utils = __webpack_require__(0);
 	var InterceptorManager = __webpack_require__(18);
 	var dispatchRequest = __webpack_require__(19);
 	var isAbsoluteURL = __webpack_require__(27);
@@ -1293,7 +1313,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -1351,10 +1371,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	var transformData = __webpack_require__(22);
-	var isCancel = __webpack_require__(11);
-	var defaults = __webpack_require__(7);
+	var isCancel = __webpack_require__(6);
+	var defaults = __webpack_require__(2);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -1461,7 +1481,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(12);
+	var createError = __webpack_require__(7);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -1492,7 +1512,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -1560,7 +1580,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -1652,7 +1672,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1731,7 +1751,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1805,7 +1825,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -1823,7 +1843,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(0);
 	
 	/**
 	 * Parse headers into an object
