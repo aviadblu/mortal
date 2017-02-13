@@ -1,19 +1,39 @@
 /// <reference path="../../_all.d.ts" />
 "use strict";
 const cheerio = require("cheerio");
+const request = require("request");
 const request_service_1 = require("../../services/request.service");
 let requestSvc = new request_service_1.RequestService();
 const pollXmlListInterval = 1000 * 60 * 10; // 10 minutes
-//const pollXmlListInterval = 1000 * 10; // 10 seconds
 class ServersAPI {
     constructor() {
         this._projectsMetadata = {};
+        this.machineData = {};
         this.loadData();
         setInterval(this.loadData.bind(this), pollXmlListInterval);
     }
+    loadServersData() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            request({ url: 'http://16.60.153.127/devenvs' }, (error, response, body) => {
+                let data = JSON.parse(body);
+                Object.keys(data[0]).forEach((jobId) => {
+                    if (typeof data[0][jobId] === 'object') {
+                        data[0][jobId].forEach((machineData) => {
+                            self.machineData[machineData.machine] = machineData;
+                        });
+                    }
+                });
+                resolve();
+            });
+        });
+    }
     loadData() {
         let self = this;
-        return this.getXMLList()
+        return this.loadServersData()
+            .then(() => {
+            return this.getXMLList();
+        })
             .then(() => {
             return self.getHostsList();
         });
@@ -91,6 +111,7 @@ class ServersAPI {
         });
     }
     extractHostsListFromXML(xmlUrl) {
+        let self = this;
         return requestSvc.get(xmlUrl)
             .then((response) => {
             const $ = cheerio.load(response, {
@@ -105,10 +126,16 @@ class ServersAPI {
                     normalizeWhitespace: true,
                     xmlMode: true
                 });
+                let hostName = ServersAPI.extractText(hostElement('name'));
+                let hostData = {};
+                if (hostName && self.machineData[hostName]) {
+                    hostData = self.machineData[hostName];
+                }
                 hosts.push({
-                    name: ServersAPI.extractText(hostElement('name')),
+                    name: hostName,
                     Description: ServersAPI.extractText(hostElement('Description')),
-                    InstalledOS: ServersAPI.extractText(hostElement('InstalledOS'))
+                    InstalledOS: ServersAPI.extractText(hostElement('InstalledOS')),
+                    data: hostData
                 });
             });
             return {
