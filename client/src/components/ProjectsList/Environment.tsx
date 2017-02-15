@@ -12,7 +12,7 @@ export class Environment extends React.Component<IProjectsTabsProps, {selected: 
 
 
     render() {
-        return <div className="envBlock grid__item col--sm--3 height--md padding--sm">
+        return <div className="envBlock grid__item col--sm--2 height--md padding--sm">
             <div className="bg--selected shadow--xs">
                 <div className="height--sm">
                     <h2 className="text--lg text-block text--align-center padding-v--lg">{this.props.data.environmentName}</h2>
