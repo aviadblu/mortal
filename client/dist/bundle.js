@@ -900,158 +900,9 @@
 
 
 /***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var axios_1 = __webpack_require__(14);
-	var ProjectTabs = (function (_super) {
-	    __extends(ProjectTabs, _super);
-	    function ProjectTabs(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.state = {
-	            selected: _this.props.selected
-	        };
-	        return _this;
-	    }
-	    ProjectTabs.prototype.handleTabClick = function (index) {
-	        this.setState({ selected: index });
-	        this.props.onTabSelection(index);
-	    };
-	    ProjectTabs.prototype.render = function () {
-	        var _this = this;
-	        var projectsTabs = [];
-	        var selectedClass;
-	        var index = 0;
-	        this.props.projects.forEach(function (project) {
-	            selectedClass = 'tabs__item';
-	            if (index == _this.state.selected) {
-	                selectedClass = 'tabs__item active';
-	            }
-	            projectsTabs.push(React.createElement("div", { key: project, className: selectedClass, onClick: _this.handleTabClick.bind(_this, index) }, project));
-	            index++;
-	        });
-	        return React.createElement("div", { className: "tabs tabs--bottom-line border--b" }, projectsTabs);
-	    };
-	    return ProjectTabs;
-	}(React.Component));
-	exports.ProjectTabs = ProjectTabs;
-	var ProjectsList = (function (_super) {
-	    __extends(ProjectsList, _super);
-	    function ProjectsList(props) {
-	        var _this = _super.call(this, props) || this;
-	        _this.state = {
-	            selected: 0,
-	            projects: {}
-	        };
-	        return _this;
-	    }
-	    ProjectsList.prototype.handleTabSelection = function (index) {
-	        this.setState({ selected: index });
-	    };
-	    ProjectsList.prototype.componentDidMount = function () {
-	        var _this = this;
-	        axios_1.default.get('/api/servers/projects-metadata')
-	            .then(function (res) {
-	            _this.setState({ projects: res.data });
-	        });
-	    };
-	    ProjectsList.prototype.render = function () {
-	        var projectsTabsList = [];
-	        Object.keys(this.state.projects).forEach(function (project) {
-	            projectsTabsList.push(project);
-	        });
-	        return React.createElement("div", { className: "tabs tabs--bottom-line border--b" },
-	            React.createElement(ProjectTabs, { projects: projectsTabsList, selected: this.state.selected, onTabSelection: this.handleTabSelection.bind(this) }));
-	    };
-	    return ProjectsList;
-	}(React.Component));
-	exports.ProjectsList = ProjectsList;
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var ServersGraph = (function (_super) {
-	    __extends(ServersGraph, _super);
-	    function ServersGraph() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    ServersGraph.prototype.render = function () {
-	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-b--lg" },
-	            React.createElement("div", { className: "minor padding--md bg--primary" }, this.props.title),
-	            React.createElement("div", { className: "padding--xl" },
-	                React.createElement("svg", { width: "960", height: "500" })));
-	    };
-	    return ServersGraph;
-	}(React.Component));
-	exports.ServersGraph = ServersGraph;
-
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var React = __webpack_require__(1);
-	var ServersList = (function (_super) {
-	    __extends(ServersList, _super);
-	    function ServersList() {
-	        return _super !== null && _super.apply(this, arguments) || this;
-	    }
-	    ServersList.prototype.render = function () {
-	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-b--lg" },
-	            React.createElement("div", { className: "minor padding--md bg--primary" }, this.props.title),
-	            React.createElement("div", { className: "padding--xl" },
-	                React.createElement("table", { className: "table table--tertiary" },
-	                    React.createElement("thead", null,
-	                        React.createElement("tr", null,
-	                            React.createElement("th", null, "#"),
-	                            React.createElement("th", null, "Name"),
-	                            React.createElement("th", null, "Host"),
-	                            React.createElement("th", null, "Data"))),
-	                    React.createElement("tbody", null,
-	                        React.createElement("tr", null,
-	                            React.createElement("td", null, "1"),
-	                            React.createElement("td", null, "Mark"),
-	                            React.createElement("td", null, "Otto"),
-	                            React.createElement("td", null, "@mdo")),
-	                        React.createElement("tr", null,
-	                            React.createElement("td", null, "2"),
-	                            React.createElement("td", null, "Jacob"),
-	                            React.createElement("td", null, "Thornton"),
-	                            React.createElement("td", null, "@fat")),
-	                        React.createElement("tr", null,
-	                            React.createElement("td", null, "3"),
-	                            React.createElement("td", null, "Larry"),
-	                            React.createElement("td", null, "the Bird"),
-	                            React.createElement("td", null, "@twitter"))))));
-	    };
-	    return ServersList;
-	}(React.Component));
-	exports.ServersList = ServersList;
-
-
-/***/ },
+/* 9 */,
+/* 10 */,
+/* 11 */,
 /* 12 */
 /***/ function(module, exports) {
 
@@ -1069,9 +920,7 @@
 	};
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(12);
-	var ProjectsList_1 = __webpack_require__(9);
-	var ServersList_1 = __webpack_require__(11);
-	var ServersGraph_1 = __webpack_require__(10);
+	var ProjectsList_1 = __webpack_require__(40);
 	var Layout = (function (_super) {
 	    __extends(Layout, _super);
 	    function Layout() {
@@ -1079,9 +928,7 @@
 	    }
 	    Layout.prototype.render = function () {
 	        return React.createElement("div", null,
-	            React.createElement(ProjectsList_1.ProjectsList, null),
-	            React.createElement(ServersList_1.ServersList, { title: "Servers List" }),
-	            React.createElement(ServersGraph_1.ServersGraph, { title: "graph" }));
+	            React.createElement(ProjectsList_1.ProjectsList, null));
 	    };
 	    ;
 	    return Layout;
@@ -1911,6 +1758,493 @@
 	    return callback.apply(null, arr);
 	  };
 	};
+
+
+/***/ },
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var axios_1 = __webpack_require__(14);
+	var EventEmitter = __webpack_require__(43);
+	var ProjectsTabs_1 = __webpack_require__(41);
+	var ProjectsTabsContent_1 = __webpack_require__(42);
+	var ProjectsList = (function (_super) {
+	    __extends(ProjectsList, _super);
+	    function ProjectsList(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.state = {
+	            selected: 0,
+	            projects: {}
+	        };
+	        _this.events = new EventEmitter();
+	        return _this;
+	    }
+	    ProjectsList.prototype.handleTabSelection = function (index) {
+	        this.events.emit('tab:selected', index);
+	        this.setState({ selected: index });
+	    };
+	    ProjectsList.prototype.componentDidMount = function () {
+	        var _this = this;
+	        axios_1.default.get('/api/servers/projects-metadata')
+	            .then(function (res) {
+	            _this.setState({ projects: res.data });
+	        });
+	    };
+	    ProjectsList.prototype.render = function () {
+	        var projectsTabsList = [];
+	        var projectsTabsContent = this.state.projects;
+	        Object.keys(this.state.projects).forEach(function (project) {
+	            projectsTabsList.push(project);
+	        });
+	        return React.createElement("div", { className: "margin-b--lg" },
+	            React.createElement(ProjectsTabs_1.ProjectTabs, { projects: projectsTabsList, selected: this.state.selected, onTabSelection: this.handleTabSelection.bind(this) }),
+	            React.createElement(ProjectsTabsContent_1.ProjectTabsContent, { projects: projectsTabsContent, selected: this.state.selected, events: this.events }));
+	    };
+	    return ProjectsList;
+	}(React.Component));
+	exports.ProjectsList = ProjectsList;
+
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var ProjectTabs = (function (_super) {
+	    __extends(ProjectTabs, _super);
+	    function ProjectTabs(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.state = {
+	            selected: _this.props.selected
+	        };
+	        return _this;
+	    }
+	    ProjectTabs.prototype.handleTabClick = function (index) {
+	        this.setState({ selected: index });
+	        this.props.onTabSelection(index);
+	    };
+	    ProjectTabs.prototype.render = function () {
+	        var _this = this;
+	        var projectsTabs = [];
+	        var selectedClass;
+	        var index = 0;
+	        this.props.projects.forEach(function (project) {
+	            selectedClass = 'tabs__item';
+	            if (index == _this.state.selected) {
+	                selectedClass = 'tabs__item open';
+	            }
+	            projectsTabs.push(React.createElement("div", { key: project, className: selectedClass, onClick: _this.handleTabClick.bind(_this, index) }, project));
+	            index++;
+	        });
+	        return React.createElement("div", { className: "tabs tabs--integrated tabs--bottom-line tabs--md" }, projectsTabs);
+	    };
+	    return ProjectTabs;
+	}(React.Component));
+	exports.ProjectTabs = ProjectTabs;
+
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var Environment_1 = __webpack_require__(44);
+	var ProjectTabsContent = (function (_super) {
+	    __extends(ProjectTabsContent, _super);
+	    function ProjectTabsContent(props) {
+	        var _this = _super.call(this, props) || this;
+	        _this.state = {
+	            selected: _this.props.selected
+	        };
+	        _this.registerToEvents();
+	        return _this;
+	    }
+	    ProjectTabsContent.prototype.registerToEvents = function () {
+	        var self = this;
+	        this.props.events.on('tab:selected', function (index) {
+	            self.setState({ selected: index });
+	        });
+	    };
+	    ProjectTabsContent.prototype.render = function () {
+	        var _this = this;
+	        var projectsTabsContent = [];
+	        var containerClass;
+	        var index = 0;
+	        Object.keys(this.props.projects).forEach(function (projectKey) {
+	            //console.log(this.props.projects[projectKey]);
+	            var envs = _this.props.projects[projectKey];
+	            var envsComponents = [];
+	            var envIndex = 0;
+	            envs.forEach(function (env) {
+	                envsComponents.push(React.createElement(Environment_1.Environment, { key: env.environmentName, data: env }));
+	                envIndex++;
+	            });
+	            containerClass = 'hide';
+	            if (index == _this.state.selected) {
+	                containerClass = 'grid grid--guttered';
+	            }
+	            projectsTabsContent.push(React.createElement("div", { className: containerClass, key: projectKey }, envsComponents));
+	            index++;
+	        });
+	        return React.createElement("div", { className: "margin-t--lg" }, projectsTabsContent);
+	    };
+	    return ProjectTabsContent;
+	}(React.Component));
+	exports.ProjectTabsContent = ProjectTabsContent;
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var has = Object.prototype.hasOwnProperty;
+	
+	//
+	// We store our EE objects in a plain object whose properties are event names.
+	// If `Object.create(null)` is not supported we prefix the event names with a
+	// `~` to make sure that the built-in object properties are not overridden or
+	// used as an attack vector.
+	// We also assume that `Object.create(null)` is available when the event name
+	// is an ES6 Symbol.
+	//
+	var prefix = typeof Object.create !== 'function' ? '~' : false;
+	
+	/**
+	 * Representation of a single EventEmitter function.
+	 *
+	 * @param {Function} fn Event handler to be called.
+	 * @param {Mixed} context Context for function execution.
+	 * @param {Boolean} [once=false] Only emit once
+	 * @api private
+	 */
+	function EE(fn, context, once) {
+	  this.fn = fn;
+	  this.context = context;
+	  this.once = once || false;
+	}
+	
+	/**
+	 * Minimal EventEmitter interface that is molded against the Node.js
+	 * EventEmitter interface.
+	 *
+	 * @constructor
+	 * @api public
+	 */
+	function EventEmitter() { /* Nothing to set */ }
+	
+	/**
+	 * Hold the assigned EventEmitters by name.
+	 *
+	 * @type {Object}
+	 * @private
+	 */
+	EventEmitter.prototype._events = undefined;
+	
+	/**
+	 * Return an array listing the events for which the emitter has registered
+	 * listeners.
+	 *
+	 * @returns {Array}
+	 * @api public
+	 */
+	EventEmitter.prototype.eventNames = function eventNames() {
+	  var events = this._events
+	    , names = []
+	    , name;
+	
+	  if (!events) return names;
+	
+	  for (name in events) {
+	    if (has.call(events, name)) names.push(prefix ? name.slice(1) : name);
+	  }
+	
+	  if (Object.getOwnPropertySymbols) {
+	    return names.concat(Object.getOwnPropertySymbols(events));
+	  }
+	
+	  return names;
+	};
+	
+	/**
+	 * Return a list of assigned event listeners.
+	 *
+	 * @param {String} event The events that should be listed.
+	 * @param {Boolean} exists We only need to know if there are listeners.
+	 * @returns {Array|Boolean}
+	 * @api public
+	 */
+	EventEmitter.prototype.listeners = function listeners(event, exists) {
+	  var evt = prefix ? prefix + event : event
+	    , available = this._events && this._events[evt];
+	
+	  if (exists) return !!available;
+	  if (!available) return [];
+	  if (available.fn) return [available.fn];
+	
+	  for (var i = 0, l = available.length, ee = new Array(l); i < l; i++) {
+	    ee[i] = available[i].fn;
+	  }
+	
+	  return ee;
+	};
+	
+	/**
+	 * Emit an event to all registered event listeners.
+	 *
+	 * @param {String} event The name of the event.
+	 * @returns {Boolean} Indication if we've emitted an event.
+	 * @api public
+	 */
+	EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
+	  var evt = prefix ? prefix + event : event;
+	
+	  if (!this._events || !this._events[evt]) return false;
+	
+	  var listeners = this._events[evt]
+	    , len = arguments.length
+	    , args
+	    , i;
+	
+	  if ('function' === typeof listeners.fn) {
+	    if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
+	
+	    switch (len) {
+	      case 1: return listeners.fn.call(listeners.context), true;
+	      case 2: return listeners.fn.call(listeners.context, a1), true;
+	      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
+	      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
+	      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
+	      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
+	    }
+	
+	    for (i = 1, args = new Array(len -1); i < len; i++) {
+	      args[i - 1] = arguments[i];
+	    }
+	
+	    listeners.fn.apply(listeners.context, args);
+	  } else {
+	    var length = listeners.length
+	      , j;
+	
+	    for (i = 0; i < length; i++) {
+	      if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
+	
+	      switch (len) {
+	        case 1: listeners[i].fn.call(listeners[i].context); break;
+	        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
+	        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
+	        default:
+	          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
+	            args[j - 1] = arguments[j];
+	          }
+	
+	          listeners[i].fn.apply(listeners[i].context, args);
+	      }
+	    }
+	  }
+	
+	  return true;
+	};
+	
+	/**
+	 * Register a new EventListener for the given event.
+	 *
+	 * @param {String} event Name of the event.
+	 * @param {Function} fn Callback function.
+	 * @param {Mixed} [context=this] The context of the function.
+	 * @api public
+	 */
+	EventEmitter.prototype.on = function on(event, fn, context) {
+	  var listener = new EE(fn, context || this)
+	    , evt = prefix ? prefix + event : event;
+	
+	  if (!this._events) this._events = prefix ? {} : Object.create(null);
+	  if (!this._events[evt]) this._events[evt] = listener;
+	  else {
+	    if (!this._events[evt].fn) this._events[evt].push(listener);
+	    else this._events[evt] = [
+	      this._events[evt], listener
+	    ];
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Add an EventListener that's only called once.
+	 *
+	 * @param {String} event Name of the event.
+	 * @param {Function} fn Callback function.
+	 * @param {Mixed} [context=this] The context of the function.
+	 * @api public
+	 */
+	EventEmitter.prototype.once = function once(event, fn, context) {
+	  var listener = new EE(fn, context || this, true)
+	    , evt = prefix ? prefix + event : event;
+	
+	  if (!this._events) this._events = prefix ? {} : Object.create(null);
+	  if (!this._events[evt]) this._events[evt] = listener;
+	  else {
+	    if (!this._events[evt].fn) this._events[evt].push(listener);
+	    else this._events[evt] = [
+	      this._events[evt], listener
+	    ];
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Remove event listeners.
+	 *
+	 * @param {String} event The event we want to remove.
+	 * @param {Function} fn The listener that we need to find.
+	 * @param {Mixed} context Only remove listeners matching this context.
+	 * @param {Boolean} once Only remove once listeners.
+	 * @api public
+	 */
+	EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
+	  var evt = prefix ? prefix + event : event;
+	
+	  if (!this._events || !this._events[evt]) return this;
+	
+	  var listeners = this._events[evt]
+	    , events = [];
+	
+	  if (fn) {
+	    if (listeners.fn) {
+	      if (
+	           listeners.fn !== fn
+	        || (once && !listeners.once)
+	        || (context && listeners.context !== context)
+	      ) {
+	        events.push(listeners);
+	      }
+	    } else {
+	      for (var i = 0, length = listeners.length; i < length; i++) {
+	        if (
+	             listeners[i].fn !== fn
+	          || (once && !listeners[i].once)
+	          || (context && listeners[i].context !== context)
+	        ) {
+	          events.push(listeners[i]);
+	        }
+	      }
+	    }
+	  }
+	
+	  //
+	  // Reset the array, or remove it completely if we have no more listeners.
+	  //
+	  if (events.length) {
+	    this._events[evt] = events.length === 1 ? events[0] : events;
+	  } else {
+	    delete this._events[evt];
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Remove all listeners or only the listeners for the specified event.
+	 *
+	 * @param {String} event The event want to remove all listeners for.
+	 * @api public
+	 */
+	EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
+	  if (!this._events) return this;
+	
+	  if (event) delete this._events[prefix ? prefix + event : event];
+	  else this._events = prefix ? {} : Object.create(null);
+	
+	  return this;
+	};
+	
+	//
+	// Alias methods names because people roll like that.
+	//
+	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+	EventEmitter.prototype.addListener = EventEmitter.prototype.on;
+	
+	//
+	// This function doesn't apply anymore.
+	//
+	EventEmitter.prototype.setMaxListeners = function setMaxListeners() {
+	  return this;
+	};
+	
+	//
+	// Expose the prefix.
+	//
+	EventEmitter.prefixed = prefix;
+	
+	//
+	// Expose the module.
+	//
+	if (true) {
+	  module.exports = EventEmitter;
+	}
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var React = __webpack_require__(1);
+	var Environment = (function (_super) {
+	    __extends(Environment, _super);
+	    function Environment(props) {
+	        var _this = _super.call(this, props) || this;
+	        console.log(_this.props.data.hosts);
+	        return _this;
+	    }
+	    Environment.prototype.render = function () {
+	        return React.createElement("div", { className: "envBlock grid__item col--sm--3 height--md padding--sm" },
+	            React.createElement("div", { className: "bg--selected shadow--xs" },
+	                React.createElement("div", { className: "height--sm" },
+	                    React.createElement("h2", { className: "text--lg text-block text--align-center padding-v--lg" }, this.props.data.environmentName)),
+	                React.createElement("div", { className: "text-block bg--content" },
+	                    React.createElement("div", { className: "font--semibold padding--md text--capitalize text-block__text ng-binding" },
+	                        React.createElement("div", { className: "icon-plus-6 icon-size--24" })))));
+	    };
+	    return Environment;
+	}(React.Component));
+	exports.Environment = Environment;
 
 
 /***/ }
