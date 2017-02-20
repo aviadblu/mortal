@@ -2,6 +2,7 @@ import * as React from "react";
 import axios from 'axios';
 import * as EventEmitter from 'eventemitter3';
 
+import {App} from '../../index';
 import {ProjectTabs} from './ProjectsTabs';
 import {ProjectTabsContent} from './ProjectsTabsContent';
 
@@ -10,7 +11,7 @@ interface IProjectsState {
     projects: Object;
 }
 
-export class ProjectsList extends React.Component<{}, IProjectsState> {
+export class ProjectsList extends React.Component<{appEvents: any}, IProjectsState> {
     events: any;
 
     constructor(props) {
@@ -41,10 +42,10 @@ export class ProjectsList extends React.Component<{}, IProjectsState> {
             projectsTabsList.push(project);
         });
 
-        return <div className="margin-b--lg">
+        return <div className="rows margin-b--lg">
             <ProjectTabs projects={projectsTabsList} selected={this.state.selected}
                          onTabSelection={this.handleTabSelection.bind(this)}/>
-            <ProjectTabsContent projects={projectsTabsContent} selected={this.state.selected} events={this.events}/>
+            <ProjectTabsContent projects={projectsTabsContent} selected={this.state.selected} events={this.events} appEvents={this.props.appEvents}/>
         </div>;
     }
 }

@@ -5,3 +5,7 @@
 .envBlock {
 
 }
+
+body {
+    background: transparent url('/assets/img/1.jpg') center no-repeat;
+}

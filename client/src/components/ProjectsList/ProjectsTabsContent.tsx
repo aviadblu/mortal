@@ -6,6 +6,7 @@ interface IProjectsTabsProps {
     projects: Object;
     selected: number;
     events: any;
+    appEvents: any;
 }
 
 export class ProjectTabsContent extends React.Component<IProjectsTabsProps, {selected: number}> {
@@ -35,9 +36,10 @@ export class ProjectTabsContent extends React.Component<IProjectsTabsProps, {sel
 
             let envs = this.props.projects[projectKey];
             let envsComponents = [];
+            let envHostsComponents = [];
             let envIndex = 0;
             envs.forEach((env) => {
-                envsComponents.push(<Environment key={env.environmentName} data={env}/>);
+                envsComponents.push(<Environment key={env.environmentName + envIndex} data={env} appEvents={this.props.appEvents}/>);
                 envIndex++;
             });
 
