@@ -5430,7 +5430,7 @@ label.font--infog-light {
     bottom: 0;
     left: 0;
     background: url(../assets/images/stripes--dark.svg) repeat;
-    background: url(images/stripes--light.svg) repeat;
+    background: url(../images/stripes--light.svg) repeat;
     background-color: #f5f5f5;
     opacity: 0.5;
 }
@@ -12782,7 +12782,7 @@ a.navigation__item:hover {
     color: rgba(0, 0, 0, 0.5);
 }
 .bg--temporary {
-    background: url(images/stripes--light.svg) repeat;
+    background: url(../images/stripes--light.svg) repeat;
 }
 .example--h-gallery .example__body > * + * {
     margin-top: 30px;
