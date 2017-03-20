@@ -1218,13 +1218,12 @@
 	        var _this = _super.call(this, props) || this;
 	        _this.dashboardGridItems = [];
 	        _this.dashboardGridItemsMap = {};
+	        // todo: 2) get item array from local storage, parse and init array with persistent values
+	        _this.dashboardGridItems = JSON.parse(localStorage.getItem("dashboardGridItems"));
 	        _this.state = {
 	            dashboardGridItems: _this.dashboardGridItems,
 	            data: {}
 	        };
-	        // todo: 2) get item array from local storage, parse and init array with persistent values
-	        // let arra = localStorage.getItem(k);
-	        // let array = JSON.parse(arra);
 	        _this.registerToEvents();
 	        _this.arrangeMap();
 	        return _this;
@@ -1256,6 +1255,7 @@
 	        console.log(JSON.stringify(self.dashboardGridItems));
 	        // todo: 1) push stringify array to local storage with some key
 	        // localStorage.setItem(k,v)
+	        localStorage.setItem("dashboardGridItems", JSON.stringify(self.dashboardGridItems));
 	    };
 	    Dashboard.prototype.registerToEvents = function () {
 	        var self = this;
