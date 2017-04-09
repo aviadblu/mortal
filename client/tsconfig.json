@@ -9,5 +9,8 @@
   },
   "include": [
     "./src/**/*"
+  ],
+  "files": [
+    "typings/typings.d.ts"
   ]
 }

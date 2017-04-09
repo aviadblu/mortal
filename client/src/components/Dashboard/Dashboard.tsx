@@ -7,7 +7,7 @@ interface IDashboardProps {
 
 export class Dashboard extends React.Component<IDashboardProps, {dashboardGridItems: any, data: any}> {
 
-    dashboardGridItems = [];
+    dashboardGridItems = localStorage.getItem('grid-items') ? JSON.parse(localStorage.getItem('grid-items')) : [];
     dashboardGridItemsMap = {};
 
     constructor(props) {
@@ -18,19 +18,12 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
             data: {}
         };
 
-        // todo: 2) get item array from local storage, parse and init array with persistent values
-        // let arra = localStorage.getItem(k);
-        // let array = JSON.parse(arra);
-
-
-
-
         this.registerToEvents();
         this.arrangeMap();
     }
 
 
-    getServersStatusData() {
+    getServersStatusMetaData() {
         let self = this;
         axios.get('/api/servers/projects-metadata')
             .then(productsData => {
@@ -42,9 +35,22 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                     });
 
                 });
+                console.log(data);
                 this.setState({data: data});
 
                 //console.log(data);
+            });
+    }
+
+    getServersStatusData() {
+        let self = this;
+        axios.get('/api/servers/servers-status')
+            .then(serversData => {
+                let data = {};
+                console.log(serversData);
+
+                // 1) todo: map host status data => this.state.data[job][hostIndex].status = "new data"
+                // set state
             });
     }
 
@@ -52,17 +58,9 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
         let self = this;
         self.dashboardGridItemsMap = {};
         self.dashboardGridItems.forEach((itemKey, index) => {
-            //console.log(itemKey);
             self.dashboardGridItemsMap[itemKey] = index;
         });
-        console.log(self.dashboardGridItems);
-        console.log(JSON.stringify(self.dashboardGridItems));
-
-        // todo: 1) push stringify array to local storage with some key
-        // localStorage.setItem(k,v)
-
-
-
+        localStorage.setItem('grid-items', JSON.stringify(self.dashboardGridItems))
     }
 
 
@@ -85,7 +83,8 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
     }
 
     componentDidMount() {
-        this.getServersStatusData();
+        this.getServersStatusMetaData();
+        this.getServersStatusData()
     }
 
     removeFromDashboard(item) {
@@ -109,6 +108,11 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
 
     }
 
+    handleHostClick(job, hostIndex) {
+        this.state.data[job][hostIndex].visible = !this.state.data[job][hostIndex].visible;
+        this.setState({data: this.state.data});
+    }
+
     render() {
         let gridItems = [];
         this.dashboardGridItems.forEach((item) => {
@@ -117,13 +121,26 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
             if (this.state.data[item]) {
                 let index = 0;
                 this.state.data[item].forEach((host) => {
-                    index++;
-                    itemDataRows.push(<tr key={host.name + index}>
+                    itemDataRows.push(<tr key={host.name + index}
+                                          className="hostRow"
+                                          onClick={this.handleHostClick.bind(this, item, index)}>
                         <td>{index}</td>
                         <td>{host.name}</td>
                         <td>{host.InstalledOS}</td>
                         <td>{host.Description}</td>
                     </tr>);
+
+
+                    let moreClass = 'hostRowMoreInfo';
+                    if(host.visible) {
+                        moreClass += ' visible';
+                    }
+                    itemDataRows.push(<tr key={host.name + index + '_more'} className={moreClass}>
+                        <td colSpan={4}>
+                            // 2) todo print status data
+                        </td>
+                    </tr>);
+                    index++;
                 });
             }
 

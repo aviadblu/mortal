@@ -1,0 +1,29 @@
+[
+  {
+    "vmName":"myd-vm08081",
+    "vmStatus":"UP",
+    "ipAddress":"16.60.187.159",
+    "productInstalled":"LoadRunner",
+    "version": "12.55.352.0",
+    "productLastUpdate":"Wednesday 7pm",
+    "userConnected":"Nobody"
+  },
+  {
+    "vmName":"myd-vm21528",
+    "vmStatus":"UP",
+    "ipAddress":"16.60.184.108",
+    "productInstalled":"LoadRunner",
+    "version": "12.55.352.0",
+    "productLastUpdate":"Wednesday7pm",
+    "userConnected":"belferd"
+  },
+  {
+    "vmName":"myd-vm08154",
+    "vmStatus":"UP",
+    "ipAddress":"16.60.158.84",
+    "productInstalled":"LoadRunner",
+    "version": "12.55.352.0",
+    "productLastUpdate":"Wednesday 7pm",
+    "userConnected":"katsnels"
+  }
+]

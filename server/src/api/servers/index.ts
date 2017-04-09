@@ -7,15 +7,29 @@ import {RequestService} from "../../services/request.service";
 let requestSvc = new RequestService();
 
 const pollXmlListInterval = 1000 * 60 * 10; // 10 minutes
+const pollServersStatusInterval = 1000 * 60 * 5; // 5 minutes
 
 export class ServersAPI {
     private _projectsMetadata: Object = {};
     private machineData: Object = {};
+    private _serversStatus: any[] = [];
 
     constructor() {
         this.loadData();
-
+        this.loadServersStatus();
+        setInterval(this.loadServersStatus.bind(this), pollServersStatusInterval);
         setInterval(this.loadData.bind(this), pollXmlListInterval);
+    }
+
+    private loadServersStatus() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            request({url: 'http://localhost:9000/api/status'}, (error, response, body) => {
+                let data = JSON.parse(body);
+                self._serversStatus = data;
+                resolve();
+            })
+        });
     }
 
     private loadServersData() {
@@ -172,6 +186,11 @@ export class ServersAPI {
 
     get projectsMetadata(): Object {
         return this._projectsMetadata;
+    }
+
+
+    get serversStatus(): any[] {
+        return this._serversStatus;
     }
 }
 

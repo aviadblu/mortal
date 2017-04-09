@@ -8,7 +8,7 @@ export class ServersList extends React.Component<ServersListProps, undefined> {
         return <div className="shadow--xs rows bg--content margin-b--lg">
             <div className="minor padding--md bg--primary">{this.props.title}</div>
             <div className="padding--xl">
-                <table className="table table--tertiary">
+                <table className="table table--primary">
                     <thead>
                     <tr>
                         <th>#</th>

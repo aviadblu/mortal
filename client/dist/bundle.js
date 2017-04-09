@@ -1216,10 +1216,8 @@
 	    __extends(Dashboard, _super);
 	    function Dashboard(props) {
 	        var _this = _super.call(this, props) || this;
-	        _this.dashboardGridItems = [];
+	        _this.dashboardGridItems = localStorage.getItem('grid-items') ? JSON.parse(localStorage.getItem('grid-items')) : [];
 	        _this.dashboardGridItemsMap = {};
-	        // todo: 2) get item array from local storage, parse and init array with persistent values
-	        _this.dashboardGridItems = JSON.parse(localStorage.getItem("dashboardGridItems"));
 	        _this.state = {
 	            dashboardGridItems: _this.dashboardGridItems,
 	            data: {}
@@ -1228,7 +1226,7 @@
 	        _this.arrangeMap();
 	        return _this;
 	    }
-	    Dashboard.prototype.getServersStatusData = function () {
+	    Dashboard.prototype.getServersStatusMetaData = function () {
 	        var _this = this;
 	        var self = this;
 	        axios_1.default.get('/api/servers/projects-metadata')
@@ -1240,22 +1238,28 @@
 	                    data[env.environmentName.split(' ').join('__')] = env.hosts;
 	                });
 	            });
+	            console.log(data);
 	            _this.setState({ data: data });
 	            //console.log(data);
+	        });
+	    };
+	    Dashboard.prototype.getServersStatusData = function () {
+	        var self = this;
+	        axios_1.default.get('/api/servers/servers-status')
+	            .then(function (serversData) {
+	            var data = {};
+	            console.log(serversData);
+	            // 1) todo: map host status data => this.state.data[job][hostIndex].status = "new data"
+	            // set state
 	        });
 	    };
 	    Dashboard.prototype.arrangeMap = function () {
 	        var self = this;
 	        self.dashboardGridItemsMap = {};
 	        self.dashboardGridItems.forEach(function (itemKey, index) {
-	            //console.log(itemKey);
 	            self.dashboardGridItemsMap[itemKey] = index;
 	        });
-	        console.log(self.dashboardGridItems);
-	        console.log(JSON.stringify(self.dashboardGridItems));
-	        // todo: 1) push stringify array to local storage with some key
-	        // localStorage.setItem(k,v)
-	        localStorage.setItem("dashboardGridItems", JSON.stringify(self.dashboardGridItems));
+	        localStorage.setItem('grid-items', JSON.stringify(self.dashboardGridItems));
 	    };
 	    Dashboard.prototype.registerToEvents = function () {
 	        var self = this;
@@ -1273,6 +1277,7 @@
 	        });
 	    };
 	    Dashboard.prototype.componentDidMount = function () {
+	        this.getServersStatusMetaData();
 	        this.getServersStatusData();
 	    };
 	    Dashboard.prototype.removeFromDashboard = function (item) {
@@ -1292,6 +1297,10 @@
 	        this.setState({ dashboardGridItems: self.dashboardGridItems });
 	        this.arrangeMap();
 	    };
+	    Dashboard.prototype.handleHostClick = function (job, hostIndex) {
+	        this.state.data[job][hostIndex].visible = !this.state.data[job][hostIndex].visible;
+	        this.setState({ data: this.state.data });
+	    };
 	    Dashboard.prototype.render = function () {
 	        var _this = this;
 	        var gridItems = [];
@@ -1300,12 +1309,18 @@
 	            if (_this.state.data[item]) {
 	                var index_1 = 0;
 	                _this.state.data[item].forEach(function (host) {
-	                    index_1++;
-	                    itemDataRows.push(React.createElement("tr", { key: host.name + index_1 },
+	                    itemDataRows.push(React.createElement("tr", { key: host.name + index_1, className: "hostRow", onClick: _this.handleHostClick.bind(_this, item, index_1) },
 	                        React.createElement("td", null, index_1),
 	                        React.createElement("td", null, host.name),
 	                        React.createElement("td", null, host.InstalledOS),
 	                        React.createElement("td", null, host.Description)));
+	                    var moreClass = 'hostRowMoreInfo';
+	                    if (host.visible) {
+	                        moreClass += ' visible';
+	                    }
+	                    itemDataRows.push(React.createElement("tr", { key: host.name + index_1 + '_more', className: moreClass },
+	                        React.createElement("td", { colSpan: 4 }, "// 2) todo print status data")));
+	                    index_1++;
 	                });
 	            }
 	            gridItems.push(React.createElement("div", { key: item, className: "grid__item col--sm--6 *col--md--4" },

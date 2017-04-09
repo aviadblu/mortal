@@ -5,12 +5,26 @@ const request = require("request");
 const request_service_1 = require("../../services/request.service");
 let requestSvc = new request_service_1.RequestService();
 const pollXmlListInterval = 1000 * 60 * 10; // 10 minutes
+const pollServersStatusInterval = 1000 * 60 * 5; // 5 minutes
 class ServersAPI {
     constructor() {
         this._projectsMetadata = {};
         this.machineData = {};
+        this._serversStatus = [];
         this.loadData();
+        this.loadServersStatus();
+        setInterval(this.loadServersStatus.bind(this), pollServersStatusInterval);
         setInterval(this.loadData.bind(this), pollXmlListInterval);
+    }
+    loadServersStatus() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            request({ url: 'http://localhost:9000/api/status' }, (error, response, body) => {
+                let data = JSON.parse(body);
+                self._serversStatus = data;
+                resolve();
+            });
+        });
     }
     loadServersData() {
         let self = this;
@@ -146,6 +160,9 @@ class ServersAPI {
     }
     get projectsMetadata() {
         return this._projectsMetadata;
+    }
+    get serversStatus() {
+        return this._serversStatus;
     }
 }
 exports.ServersAPI = ServersAPI;

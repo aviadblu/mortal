@@ -12,6 +12,10 @@ export class ServersRouter {
         this.router.get('/projects-metadata', (req, res) => {
             res.send(_serversAPI.projectsMetadata);
         });
+
+        this.router.get('/servers-status', (req, res) => {
+            res.send(_serversAPI.serversStatus);
+        });
     }
 
     getRouter() {

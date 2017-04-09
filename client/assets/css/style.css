@@ -7,5 +7,19 @@
 }
 
 body {
-    background: transparent url('/assets/img/1.jpg') center no-repeat;
+    background: transparent url('/assets/images/1.jpg') center no-repeat;
+}
+
+.hostRow:hover {
+    background-color: #fff;
+    color: #3c3c3c;
+    cursor: pointer;
+}
+
+.hostRowMoreInfo {
+    display: none;
+}
+
+.hostRowMoreInfo.visible {
+    display: table-row;
 }

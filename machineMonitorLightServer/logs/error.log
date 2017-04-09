@@ -1,0 +1,3 @@
+2017/04/03 11:49:51 [emerg] 12956#15724: directive "root" is not terminated by ";" in C:\Users\shimonmo\code\mortal\machineMonitorLightServer/conf/conf.d/light-server.conf:4
+2017/04/03 11:50:09 [error] 13016#17336: *1 CreateFile() "C:\Users\shimonmo\code\mortal\machineMonitorLightServer\jsonsmachinesStatus.json" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /api/status HTTP/1.1", host: "localhost:9000"
+2017/04/03 11:50:22 [error] 13016#17336: *1 CreateFile() "C:\Users\shimonmo\code\mortal\machineMonitorLightServer\jsonsmachinesStatus.json" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /api/status HTTP/1.1", host: "localhost:9000"
