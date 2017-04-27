@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from 'axios';
+import * as _ from 'lodash';
 
 interface IDashboardProps {
     appEvents: any
@@ -30,13 +31,16 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                 let data = {};
                 Object.keys(productsData.data).forEach((productKey) => {
                     productsData.data[productKey].forEach((env) => {
-                        //console.log(env);
+                        console.log("getServersStatusMetaData()--- Object.keys(productsData.data)="+Object.keys(productsData.data));
+                        console.log("getServersStatusMetaData()--- env="+env);
                         data[env.environmentName.split(' ').join('__')] = env.hosts;
                     });
 
                 });
-                console.log(data);
-                this.setState({data: data});
+                console.log('getServersStatusMetaData: ' + data);
+                self.setState({data: data});
+                // to do start interval call to this function
+                self.getServersStatusData();
 
                 //console.log(data);
             });
@@ -46,12 +50,50 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
         let self = this;
         axios.get('/api/servers/servers-status')
             .then(serversData => {
-                let data = {};
+                let data = [{}];
+                let xmlData = {};
+                let xmlName;
                 console.log(serversData);
+                // console.log('getServersStatusData - res:');
+                // console.log(serversData.data);
+                // console.log('getServersStatusData - self.state.data:');
+                // console.log(self.state.data);
+                //console.log(Array.isArray(serversData.data));
+                serversData.data.forEach((item) => {
+                    //////console.log(serverKey.vmName,serverKey.xmlName);
 
-                // 1) todo: map host status data => this.state.data[job][hostIndex].status = "new data"
-                // set state
+                    let metaKey = _.find(Object.keys(self.state.data), (key) => {
+                        return key === item.xmlName;
+                    });
+                    //let metaKey =Object.keys(self.state.data).find( key) => { return key === item.xmlName; });
+                    // if(key === item.xmlName)
+                    // {
+                    //     console.log(key);
+                    // }
+                    console.log(metaKey)
+                    if (metaKey) {
+                        let hostIdx = _.findIndex(self.state.data[metaKey], (host) => { return (host as any).name === item.vmName; });
+                        if (hostIdx > -1) {
+                            self.state.data[metaKey][hostIdx].extraData = item;
+                        }
+                    }
+                    // 1) todo: map host status data => this.state.data[job][hostIndex].status = "new data"
+                    //this.state.data[job][hostIndex].status = "new data";
+                    // set state
+                    //////xmlName = serverKey.xmlName;
+                    //////data[serverKey.vmName]=serverKey;
+                    //this.state.data=data;
+                    //////console.log(this.state.data);
+                   // xmlData[xmlName][serverKey.vmName]=serverKey;
+
+
+                });
+                //console.log(data);
+                this.setState({data: self.state.data});
             });
+
+
+
     }
 
     private arrangeMap() {
@@ -84,7 +126,7 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
 
     componentDidMount() {
         this.getServersStatusMetaData();
-        this.getServersStatusData()
+        //this.getServersStatusData()
     }
 
     removeFromDashboard(item) {
@@ -135,9 +177,20 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                     if(host.visible) {
                         moreClass += ' visible';
                     }
+
+                    //console.log(host);
                     itemDataRows.push(<tr key={host.name + index + '_more'} className={moreClass}>
-                        <td colSpan={4}>
-                            // 2) todo print status data
+                        <td colSpan={1}>
+                            {host.extraData ? host.extraData.vmStatus : 'N/A'}
+                        </td>
+                        <td colSpan={1}>
+                            {host.extraData ? host.extraData.ipAddress : 'N/A'}
+                        </td>
+                        <td colSpan={1}>
+                            {host.extraData ? host.extraData.productInstalled : 'N/A'}
+                        </td>
+                        <td colSpan={1}>
+                            {host.extraData ? host.extraData.version : 'N/A'}
                         </td>
                     </tr>);
                     index++;

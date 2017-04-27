@@ -26,6 +26,7 @@ export class ServersAPI {
         return new Promise((resolve, reject) => {
             request({url: 'http://localhost:9000/api/status'}, (error, response, body) => {
                 let data = JSON.parse(body);
+                console.log("------> index.tx line 29: loadServersStatus():" + data);
                 self._serversStatus = data;
                 resolve();
             })

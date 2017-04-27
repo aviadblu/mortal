@@ -1,29 +1,42 @@
 [
   {
-    "vmName":"myd-vm08081",
+    "xmlName":"LR__G11N__14__0__DEV",
+    "vmName":"myd-vm21918",
     "vmStatus":"UP",
     "ipAddress":"16.60.187.159",
     "productInstalled":"LoadRunner",
-    "version": "12.55.352.0",
-    "productLastUpdate":"Wednesday 7pm",
+    "version": "12.55.400.0",
+    "productLastUpdate":"Monday 7am",
     "userConnected":"Nobody"
   },
   {
-    "vmName":"myd-vm21528",
+    "xmlName":"LR__G11N__14__0__DEV",
+    "vmName":"myd-vm20999",
     "vmStatus":"UP",
     "ipAddress":"16.60.184.108",
     "productInstalled":"LoadRunner",
-    "version": "12.55.352.0",
-    "productLastUpdate":"Wednesday7pm",
+    "version": "12.55.400.0",
+    "productLastUpdate":"Monday 7am",
     "userConnected":"belferd"
   },
   {
-    "vmName":"myd-vm08154",
+    "xmlName":"LR__G11N__14__0__DEV",
+    "vmName":"myd-vm21100",
     "vmStatus":"UP",
     "ipAddress":"16.60.158.84",
     "productInstalled":"LoadRunner",
-    "version": "12.55.352.0",
-    "productLastUpdate":"Wednesday 7pm",
+    "version": "12.55.400.0",
+    "productLastUpdate":"Monday 7am",
+    "userConnected":"katsnels"
+  },
+  {
+    "xmlName":"LR__G11N__14__0__QA",
+    "vmName":"myd-vm05213",
+    "vmStatus":"UP",
+    "ipAddress":"16.60.158.84",
+    "productInstalled":"LoadRunner",
+    "version": "12.55.400.0",
+    "productLastUpdate":"Monday 7am",
     "userConnected":"katsnels"
   }
 ]
