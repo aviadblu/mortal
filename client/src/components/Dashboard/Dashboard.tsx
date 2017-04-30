@@ -31,8 +31,8 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                 let data = {};
                 Object.keys(productsData.data).forEach((productKey) => {
                     productsData.data[productKey].forEach((env) => {
-                        console.log("getServersStatusMetaData()--- Object.keys(productsData.data)="+Object.keys(productsData.data));
-                        console.log("getServersStatusMetaData()--- env="+env);
+                        console.log("getServersStatusMetaData()--- Object.keys(productsData.data)=" + Object.keys(productsData.data));
+                        console.log("getServersStatusMetaData()--- env=" + env);
                         data[env.environmentName.split(' ').join('__')] = env.hosts;
                     });
 
@@ -72,7 +72,9 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                     // }
                     console.log(metaKey)
                     if (metaKey) {
-                        let hostIdx = _.findIndex(self.state.data[metaKey], (host) => { return (host as any).name === item.vmName; });
+                        let hostIdx = _.findIndex(self.state.data[metaKey], (host) => {
+                            return (host as any).name === item.vmName;
+                        });
                         if (hostIdx > -1) {
                             self.state.data[metaKey][hostIdx].extraData = item;
                         }
@@ -84,14 +86,13 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                     //////data[serverKey.vmName]=serverKey;
                     //this.state.data=data;
                     //////console.log(this.state.data);
-                   // xmlData[xmlName][serverKey.vmName]=serverKey;
+                    // xmlData[xmlName][serverKey.vmName]=serverKey;
 
 
                 });
                 //console.log(data);
                 this.setState({data: self.state.data});
             });
-
 
 
     }
@@ -165,32 +166,37 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
                 this.state.data[item].forEach((host) => {
                     itemDataRows.push(<tr key={host.name + index}
                                           className="hostRow"
+                                          title={host.name + index}
                                           onClick={this.handleHostClick.bind(this, item, index)}>
                         <td>{index}</td>
                         <td>{host.name}</td>
+                        <td>{host.extraData ? host.extraData.productInstalled : 'N/A'}-{host.extraData ? host.extraData.BuildVersion : 'N/A'}</td>
                         <td>{host.InstalledOS}</td>
                         <td>{host.Description}</td>
                     </tr>);
 
 
-                    let moreClass = 'hostRowMoreInfo';
-                    if(host.visible) {
+                    let moreClass = 'hostRowMoreInfo bg--aside';
+                    if (host.visible) {
                         moreClass += ' visible';
                     }
 
                     //console.log(host);
                     itemDataRows.push(<tr key={host.name + index + '_more'} className={moreClass}>
                         <td colSpan={1}>
-                            {host.extraData ? host.extraData.vmStatus : 'N/A'}
+                            Status:{host.extraData ? host.extraData.vmStatus : 'N/A'}
                         </td>
                         <td colSpan={1}>
-                            {host.extraData ? host.extraData.ipAddress : 'N/A'}
+                            IP:{host.extraData ? host.extraData.ipAddress : 'N/A'}
                         </td>
                         <td colSpan={1}>
-                            {host.extraData ? host.extraData.productInstalled : 'N/A'}
+                            Date:{host.extraData ? host.extraData.productLastUpdate : 'N/A'}
                         </td>
                         <td colSpan={1}>
-                            {host.extraData ? host.extraData.version : 'N/A'}
+                            LP:{host.extraData ? host.extraData.LanguagePackValue : 'N/A'}
+                        </td>
+                        <td colSpan={1}>
+                            Connected:{host.extraData ? host.extraData.userConnected : 'N/A'}
                         </td>
                     </tr>);
                     index++;
@@ -198,33 +204,42 @@ export class Dashboard extends React.Component<IDashboardProps, {dashboardGridIt
             }
 
 
-            gridItems.push(<div key={item} className="grid__item col--sm--6 *col--md--4">
-                <div className="bg--aside padding--md border">
-                    {item}
-                    <div className="icon-plus-6 icon-size--24 hover--pointer"
-                         onClick={this.removeFromDashboard.bind(this, item)}></div>
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>OS</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {itemDataRows}
-                        </tbody>
-                    </table>
-                </div>
-            </div>)
+            gridItems.push(
+                <div key={item} className="grid__item col--sm--6 ">
+                    <div className="shadow--xs bg--content">
+                        <div className="title-bar title-bar--xl title-bar--primary">
+                            <div className="title-bar__title">{item}</div>
+                            <div className="title-bar__commands">
+                                <div className="btn btn--integrated"
+                                     onClick={this.removeFromDashboard.bind(this, item)}>Remove
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <table className="table table--tertiary">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Machine Name</th>
+                                <th>Product installed</th>
+                                <th>OS</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {itemDataRows}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>)
 
         });
 
 
-        return <div className="shadow--xs rows bg--content margin-t--lg">
+        return <div className="rows margin-t--lg">
 
-            <div className="padding--xl grid">
+            <div className="padding--xl grid grid--guttered--md">
                 {gridItems}
             </div>
         </div>;

@@ -19,7 +19,7 @@ class ServersAPI {
     loadServersStatus() {
         let self = this;
         return new Promise((resolve, reject) => {
-            request({ url: 'http://localhost:9000/api/status' }, (error, response, body) => {
+            request({ url: 'http://16.60.156.159:9000/api/status' }, (error, response, body) => {
                 let data = JSON.parse(body);
                 console.log("------> index.tx line 29: loadServersStatus():" + data);
                 self._serversStatus = data;

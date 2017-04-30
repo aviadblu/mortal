@@ -33,7 +33,7 @@ export class ProjectTabs extends React.Component<IProjectsTabsProps, {selected: 
             index++;
         });
 
-        return <div className="tabs tabs--integrated tabs--bottom-line tabs--md">
+        return <div className="tabs tabs--bottom-line tabs--xl border--b">
                     {projectsTabs}
                 </div>;
     }

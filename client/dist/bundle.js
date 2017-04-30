@@ -1272,7 +1272,9 @@
 	                // }
 	                console.log(metaKey);
 	                if (metaKey) {
-	                    var hostIdx = _.findIndex(self.state.data[metaKey], function (host) { return host.name === item.vmName; });
+	                    var hostIdx = _.findIndex(self.state.data[metaKey], function (host) {
+	                        return host.name === item.vmName;
+	                    });
 	                    if (hostIdx > -1) {
 	                        self.state.data[metaKey][hostIdx].extraData = item;
 	                    }
@@ -1346,39 +1348,57 @@
 	            if (_this.state.data[item]) {
 	                var index_1 = 0;
 	                _this.state.data[item].forEach(function (host) {
-	                    itemDataRows.push(React.createElement("tr", { key: host.name + index_1, className: "hostRow", onClick: _this.handleHostClick.bind(_this, item, index_1) },
+	                    itemDataRows.push(React.createElement("tr", { key: host.name + index_1, className: "hostRow", title: host.name + index_1, onClick: _this.handleHostClick.bind(_this, item, index_1) },
 	                        React.createElement("td", null, index_1),
 	                        React.createElement("td", null, host.name),
+	                        React.createElement("td", null,
+	                            host.extraData ? host.extraData.productInstalled : 'N/A',
+	                            "-",
+	                            host.extraData ? host.extraData.BuildVersion : 'N/A'),
 	                        React.createElement("td", null, host.InstalledOS),
 	                        React.createElement("td", null, host.Description)));
-	                    var moreClass = 'hostRowMoreInfo';
+	                    var moreClass = 'hostRowMoreInfo bg--aside';
 	                    if (host.visible) {
 	                        moreClass += ' visible';
 	                    }
 	                    //console.log(host);
 	                    itemDataRows.push(React.createElement("tr", { key: host.name + index_1 + '_more', className: moreClass },
-	                        React.createElement("td", { colSpan: 1 }, host.extraData ? host.extraData.vmStatus : 'N/A'),
-	                        React.createElement("td", { colSpan: 1 }, host.extraData ? host.extraData.ipAddress : 'N/A'),
-	                        React.createElement("td", { colSpan: 1 }, host.extraData ? host.extraData.productInstalled : 'N/A'),
-	                        React.createElement("td", { colSpan: 1 }, host.extraData ? host.extraData.version : 'N/A')));
+	                        React.createElement("td", { colSpan: 1 },
+	                            "Status:",
+	                            host.extraData ? host.extraData.vmStatus : 'N/A'),
+	                        React.createElement("td", { colSpan: 1 },
+	                            "IP:",
+	                            host.extraData ? host.extraData.ipAddress : 'N/A'),
+	                        React.createElement("td", { colSpan: 1 },
+	                            "Date:",
+	                            host.extraData ? host.extraData.productLastUpdate : 'N/A'),
+	                        React.createElement("td", { colSpan: 1 },
+	                            "LP:",
+	                            host.extraData ? host.extraData.LanguagePackValue : 'N/A'),
+	                        React.createElement("td", { colSpan: 1 },
+	                            "Connected:",
+	                            host.extraData ? host.extraData.userConnected : 'N/A')));
 	                    index_1++;
 	                });
 	            }
-	            gridItems.push(React.createElement("div", { key: item, className: "grid__item col--sm--6 *col--md--4" },
-	                React.createElement("div", { className: "bg--aside padding--md border" },
-	                    item,
-	                    React.createElement("div", { className: "icon-plus-6 icon-size--24 hover--pointer", onClick: _this.removeFromDashboard.bind(_this, item) }),
-	                    React.createElement("table", { className: "table" },
+	            gridItems.push(React.createElement("div", { key: item, className: "grid__item col--sm--6 " },
+	                React.createElement("div", { className: "shadow--xs bg--content" },
+	                    React.createElement("div", { className: "title-bar title-bar--xl title-bar--primary" },
+	                        React.createElement("div", { className: "title-bar__title" }, item),
+	                        React.createElement("div", { className: "title-bar__commands" },
+	                            React.createElement("div", { className: "btn btn--integrated", onClick: _this.removeFromDashboard.bind(_this, item) }, "Remove"))),
+	                    React.createElement("table", { className: "table table--tertiary" },
 	                        React.createElement("thead", null,
 	                            React.createElement("tr", null,
 	                                React.createElement("th", null, "#"),
-	                                React.createElement("th", null, "Name"),
+	                                React.createElement("th", null, "Machine Name"),
+	                                React.createElement("th", null, "Product installed"),
 	                                React.createElement("th", null, "OS"),
 	                                React.createElement("th", null, "Description"))),
 	                        React.createElement("tbody", null, itemDataRows)))));
 	        });
-	        return React.createElement("div", { className: "shadow--xs rows bg--content margin-t--lg" },
-	            React.createElement("div", { className: "padding--xl grid" }, gridItems));
+	        return React.createElement("div", { className: "rows margin-t--lg" },
+	            React.createElement("div", { className: "padding--xl grid grid--guttered--md" }, gridItems));
 	    };
 	    return Dashboard;
 	}(React.Component));
@@ -1514,7 +1534,7 @@
 	            projectsTabs.push(React.createElement("div", { key: project, className: selectedClass, onClick: _this.handleTabClick.bind(_this, index) }, project));
 	            index++;
 	        });
-	        return React.createElement("div", { className: "tabs tabs--integrated tabs--bottom-line tabs--md" }, projectsTabs);
+	        return React.createElement("div", { className: "tabs tabs--bottom-line tabs--xl border--b" }, projectsTabs);
 	    };
 	    return ProjectTabs;
 	}(React.Component));

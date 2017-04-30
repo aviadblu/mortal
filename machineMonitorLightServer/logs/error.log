@@ -17,3 +17,5 @@
 2017/04/27 14:15:16 [notice] 10680#23296: signal process started
 2017/04/27 14:15:16 [error] 10680#23296: CreateFile() "C:\Users\shimonmo\code\mortal\machineMonitorLightServer/logs/nginx.pid" failed (2: The system cannot find the file specified)
 2017/04/27 14:22:37 [error] 9740#12320: *125 CreateFile() "C:\Users\shimonmo\code\mortal\machineMonitorLightServer\jsons/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:9000", referrer: "http://localhost:9000/api/status"
+2017/04/30 09:01:28 [error] 9740#12320: *214 CreateFile() "C:\Users\shimonmo\code\mortal\machineMonitorLightServer\jsons\machinesStatus.json" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /api/status HTTP/1.1", host: "localhost:9000"
+2017/04/30 09:07:42 [error] 9740#12320: *215 CreateFile() "C:\Users\shimonmo\code\mortal\machineMonitorLightServer\jsons\machinesStatus.json" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /api/status HTTP/1.1", host: "localhost:9000"
